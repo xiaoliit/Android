@@ -1,0 +1,73 @@
+手机安全卫士主界面
+	【1】界面分析(布局结构)
+		【1】最顶部
+			标题
+		【2】水平滚动的文字
+		【3】九宫格
+	【2】最顶部的布局文件的实现
+		【1】技术点
+			【1】控件内部居中对齐---使用的是属性gravity
+			【2】将对应的属性抽取到样式中
+				【1】values---styles.xml
+				【2】将对应的属性名和属性值写入文件中
+					<style name="">
+						<item name="android:属性">属性值</item>
+					</style>
+				【3】样式文件关联组件文件		
+					style="@style/name名字"
+	【2】设置滚动的文字
+		【1】需要textView
+		【2】不换行---singleLine=true
+		【3】ellipsize----属性将省略的文字用点号表示
+		【4】让文字滚动起来---跑马灯效果
+			ellipsize=marquee
+		【5】想让文字滚动，需要将焦点放到文字上面去
+			【1】focusable=true
+			【2】focusableInTouchMode="true"-----用手触摸时也能滚动
+		【6】需要文字进行滚动需要三个属性
+			【1】ellipsize=marquee
+			【2】focusable=true
+			【3】focusableInTouchMode=true
+			【4】marqueeRepeatLimit="marquee_forever"--------无限循环
+		【7】如果别的地方也需要跑马灯----使用自定义控件
+			【1】就是重写TextView让其一直能有获取焦点即可
+			【2】写一个类继承TextView
+				【1】重写三个构造方法
+					【1】FocusTextView(Content content)-----是用在:通过JAVA代码创建控件时调用
+					【2】FocusTextView(Context context,AttributeSet attrs)-------有上下文环境、和属性集合，，什么时间用?
+						由系统调用
+					【3】FocusTextView(Context context,AttributeSet attrs,int defstyle)
+						有上下文，属性和样式主题
+						在xml转换成java对象时，xml有上下文，属性，样式的TextView调用
+				【2】重写获取焦点的方法
+					【1】isFocused(){ return ture}
+						这个方法由系统调用---相当于在xml中写android:focusable="true"
+				【3】将xml中的属性给注释掉，使用自定义的控件---
+					【1】将当前类所在的包名作为标签的名称
+						<com.itheima.mobilesafe74.view.FocusTextView>
+						</com.itheima.mobilesafe74.view.FocusTextView>
+	【3】九宫格
+		【1】使用GridView来创建九宫格---（跟ListView差不多）
+			【1】显示数据---需要使用数据适配器
+				【1】需要有数据
+				【2】指定列数---numColumns属性---xml布局文件中设置
+				【3】在Activity中获取xml文件中的GradView组件
+				【4】GridView中每一个小格包含两个部分
+					【1】文字-----new String(){}
+					【2】图片----new int(){R.drawable.图片}
+				【5】写数据适配器
+					【1】获取到的Grid.setAdapter(new MyAdapter(){})
+					【2】MyAdapter需要继承BaseAdapter
+						【1】需要重写方法
+							【1】getCount()----返回条目的总数
+							【2】Object getItem(int position)---返回相应索引的对象
+							【3】getItemId(int position)-----返回的
+							【4】View getView(int position,View converView,ViewGroup parent)-----返回九宫格某一个条目对应的布局，图片和文字
+								【1】创建布局
+									【1】将布局文件转换为对象
+										View.inflate(getApplication,R.layout.布局文件，)
+									【2】找到布局文件中的组件
+										findViewById();
+								【2】再给指定的控件赋值
+									根据数组中的索引拿到索引对应的值
+									setText(数组【索引位置】);
