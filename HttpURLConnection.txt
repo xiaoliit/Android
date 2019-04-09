@@ -1,0 +1,16 @@
+HttpURLConnection类:
+	【1】通过POST方式提交数据
+		【1】通过请求体的方式将数据写给服务器。
+		【2】请求头信息---Content-Length
+		【3】Content-type: application/xxx-www-form-urlencoded
+	【2】POST请求和Get请求方式的不同
+		【1】请求的路径不同
+		【2】Post方式要自己组建请求体
+		【3】post请求方式比get多了两个请求头信息content-length
+							content-type
+	【3】代码中实现Post请求
+		【1】设置请求头信息
+			conn.setRequestProperty("key","value");
+		【2】将拼接好的数据发送给服务器
+			conn.setDoOutput(true);
+			conn.getOutputStream().write();

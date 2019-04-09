@@ -1,0 +1,10 @@
+【1】在GitHub上创建新的仓库
+【2】本地将gitHub仓库的项目下载下来
+	git clone 项目的地址
+【3】进入到文件夹下
+	【1】将目录下的所有文件添加进入
+		git add .
+	【2】提交信息
+		git commit -m "提交信息"
+	【3】把本地仓库的项目push到gitHub上面
+		git push -u origin master
